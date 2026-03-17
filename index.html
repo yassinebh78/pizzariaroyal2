@@ -1215,26 +1215,41 @@ function closeCart() {
 
 function sendOrder() {
   const keys = Object.keys(cart);
-  if (keys.length === 0) return alert("Panier vide !");
-  let msg = `🛒 Commande - Table ${TABLE_NUMBER}:\n`;
+  if (keys.length === 0) {
+    alert("Panier vide !");
+    return;
+  }
+
   let total = 0;
-  keys.forEach(name => {
+  const items = keys.map(name => {
     const item = cart[name];
     const numPrice = parseFloat(item.price);
     total += numPrice * item.qty;
-    msg += `• ${name} x${item.qty} — ${(numPrice * item.qty).toFixed(1)}DT\n`;
+    return { name: name, qty: item.qty, price: numPrice };
   });
-  msg += `\n💰 Total : ${total.toFixed(1)}DT`;
 
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+  fetch(`${BACKEND_URL}/send-order`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
-  }).then(() => {
-    alert("✅ Commande envoyée ! Le serveur prépare votre commande.");
+    body: JSON.stringify({
+      table: TABLE_NUMBER,
+      items: items,
+      total: total
+    })
+  })
+  .then(r => {
+    if (!r.ok) throw new Error("Server responded " + r.status);
+    return r.json();
+  })
+  .then(() => {
+    alert("✅ Commande envoyée au serveur pour validation !");
     Object.keys(cart).forEach(k => delete cart[k]);
     updateCartBadge();
     closeCart();
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Erreur d'envoi. Vérifiez votre connexion ou contactez le gérant.");
   });
 }
 
