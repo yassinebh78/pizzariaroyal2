@@ -206,50 +206,6 @@ h1 {
   }
 }
 
-/* Back to top button */
-.back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: var(--main);
-  color: #fff;
-  border: none;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.3s, transform 0.3s;
-  pointer-events: none;
-}
-
-.back-to-top.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.back-to-top:hover {
-  background: var(--main-dark);
-}
-
-.back-to-top:active {
-  transform: scale(0.9);
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  body {
-    padding: 12px;
-    padding-top: calc(var(--nav-height) + 12px);
-  }
 
   .nav {
     padding: 0 10px;
@@ -1029,8 +985,6 @@ h1 {
   🔔 Appeler le serveur
 </button>
 
-<!-- Back to top button -->
-<button class="back-to-top" aria-label="Retour en haut" onclick="window.scrollTo({top:0})">&#8593;</button>
 <!-- Cart Floating Button -->
 <button class="cart-float-btn" onclick="openCart()">
   🛒
@@ -1055,10 +1009,6 @@ h1 {
 </div>
 
 <script>
-// Secure endpoint - REPLACE THIS WITH YOUR OWN BACKEND URL
-const SECURE_ENDPOINT = '/api/send-telegram-message'; // Example: https://yourdomain.com/api/telegram
-
-// Intersection Observer for scroll-reveal animations
 (function() {
   const sections = document.querySelectorAll('.section');
   if ('IntersectionObserver' in window) {
@@ -1080,20 +1030,6 @@ const SECURE_ENDPOINT = '/api/send-telegram-message'; // Example: https://yourdo
     }
   }
 
-  // Back to top button visibility
-  let btn = document.querySelector('.back-to-top');
-  let scrollTimer;
-  window.addEventListener('scroll', function() {
-    if (scrollTimer) return;
-    scrollTimer = setTimeout(function() {
-      scrollTimer = null;
-      if (window.scrollY > 400) {
-        btn.classList.add('show');
-      } else {
-        btn.classList.remove('show');
-      }
-    }, 100);
-  }, { passive: true });
 
   // Highlight active nav link on scroll
   let navLinks = document.querySelectorAll('.nav a');
@@ -1184,18 +1120,19 @@ function openCart() {
     let total = 0;
     body.innerHTML = keys.map(name => {
       const item = cart[name];
-      // Use the first price if dual pricing (e.g. "7DT / 13DT")
       const numPrice = parseFloat(item.price);
-      total += numPrice * item.qty;
+      const lineTotal = numPrice * item.qty;
+      total += lineTotal;
+      const safeName = name.replace(/'/g, "\\'");
       return `
         <div class="cart-row">
           <span class="cart-name">${name}</span>
           <div class="cart-qty-ctrl">
-            <button onclick="changeQty('${name}', -1)">−</button>
+            <button onclick="changeQty('${safeName}', -1)">−</button>
             <span>${item.qty}</span>
-            <button onclick="changeQty('${name}', 1)">+</button>
+            <button onclick="changeQty('${safeName}', 1)">+</button>
           </div>
-          <span class="cart-price">${(numPrice * item.qty).toFixed(1)}DT</span>
+          <span class="cart-price">${lineTotal.toFixed(1)}DT</span>
         </div>`;
     }).join('') + `<div class="cart-total">Total : <strong>${total.toFixed(1)}DT</strong></div>`;
   }
@@ -1228,13 +1165,16 @@ function sendOrder() {
     return { name: name, qty: item.qty, price: numPrice };
   });
 
+  const notes = document.getElementById('order-notes').value || '';
+
   fetch(`${BACKEND_URL}/send-order`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       table: TABLE_NUMBER,
       items: items,
-      total: total
+      total: total,
+      notes: notes          // ← send notes
     })
   })
   .then(r => {
@@ -1245,6 +1185,7 @@ function sendOrder() {
     alert("✅ Commande #" + data.order_no + " envoyée au serveur pour validation !");
     Object.keys(cart).forEach(k => delete cart[k]);
     updateCartBadge();
+    document.getElementById('order-notes').value = '';   // clear notes
     closeCart();
   })
   .catch(err => {
@@ -1252,6 +1193,7 @@ function sendOrder() {
     alert("Erreur d'envoi. Vérifiez votre connexion ou contactez le gérant.");
   });
 }
+
 
 
 </script>
