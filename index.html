@@ -1228,27 +1228,23 @@ function sendOrder() {
     return { name: name, qty: item.qty, price: numPrice };
   });
 
-  const notes = document.getElementById('order-notes').value || '';
-
   fetch(`${BACKEND_URL}/send-order`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       table: TABLE_NUMBER,
       items: items,
-      total: total,
-      notes: notes          // ← send notes
+      total: total
     })
   })
   .then(r => {
     if (!r.ok) throw new Error("Server responded " + r.status);
     return r.json();
   })
-  .then(data => {
-    alert("✅ Commande #" + data.order_no + " envoyée au serveur pour validation !");
+  .then(() => {
+    alert("✅ Commande envoyée au serveur pour validation !");
     Object.keys(cart).forEach(k => delete cart[k]);
     updateCartBadge();
-    document.getElementById('order-notes').value = '';   // clear notes
     closeCart();
   })
   .catch(err => {
