@@ -19,7 +19,7 @@
   --bg: #353434;
   --card: #222;
   --text: #ffffff;
-  --price: #f7f7f7;
+  --price: #c09a1b;
   --nav-height: 52px;
 }
 
@@ -52,7 +52,7 @@ body {
   left: 0;
   right: 0;
   z-index: 100;
-  background: var(--card);
+  background: rgba(255,255,255,0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(0,0,0,0.08);
@@ -188,11 +188,6 @@ h1 {
   font-size: 14px;
   flex-shrink: 0;
   margin-left: 12px;
-  display:inline-block;
-  width:30px;
-  margin-left: 0;
-  margin-top: 2px;
-  
 }
 
 .c2 {
@@ -230,6 +225,11 @@ h1 {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
+  }
+
+  .price {
+    margin-left: 0;
+    margin-top: 2px;
   }
 
   .section-title {
@@ -296,7 +296,8 @@ h1 {
 
 .add-btn {
   color:#fff;
-  background-color:var(--main);
+  border-color: var(--price);
+  border-width: 2px;
   color: var(--price);
   width: 30px;
   height: 30px;
@@ -305,8 +306,6 @@ h1 {
   cursor: pointer;
   line-height: 1;
   flex-shrink: 0;
-  display:inline-block;
-  width:30px;
 }
 
 .add-btn:active { transform: scale(0.9); }
@@ -1054,7 +1053,7 @@ h1 {
       }
       for (let i = 0; i < navLinks.length; i++) {
         if (i === activeIdx) {
-          navLinks[i].style.background = '#b33a2b';
+          navLinks[i].style.background = '#c09a1b';
           navLinks[i].style.color = '#fff';
         } else {
           navLinks[i].style.background = '';
