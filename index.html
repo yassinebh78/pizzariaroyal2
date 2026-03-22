@@ -14,12 +14,12 @@
 
 <style>
 :root {
-  --main: #c09a1b;
-  --main-dark: #a6841a;
-  --bg: #f7f7f7;
-  --card: #ffffff;
-  --text: #222;
-  --price: #b33a2b;
+  --main: #b33a2b;
+  --main-dark: #86291d;
+  --bg: #353434;
+  --card: #222;
+  --text: #ffffff;
+  --price: #f7f7f7;
   --nav-height: 52px;
 }
 
@@ -52,7 +52,7 @@ body {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(255,255,255,0.92);
+  background: var(--card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(0,0,0,0.08);
@@ -177,7 +177,7 @@ h1 {
 
 .item-info p {
   font-size: 12.5px;
-  color: #777;
+  color: #e2e1e1;
   line-height: 1.4;
 }
 
@@ -188,6 +188,11 @@ h1 {
   font-size: 14px;
   flex-shrink: 0;
   margin-left: 12px;
+  display:inline-block;
+  width:45px;
+  margin-left: 0;
+  margin-top: 2px;
+  
 }
 
 .c2 {
@@ -206,50 +211,6 @@ h1 {
   }
 }
 
-/* Back to top button */
-.back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: var(--main);
-  color: #fff;
-  border: none;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.3s, transform 0.3s;
-  pointer-events: none;
-}
-
-.back-to-top.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.back-to-top:hover {
-  background: var(--main-dark);
-}
-
-.back-to-top:active {
-  transform: scale(0.9);
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  body {
-    padding: 12px;
-    padding-top: calc(var(--nav-height) + 12px);
-  }
 
   .nav {
     padding: 0 10px;
@@ -269,11 +230,6 @@ h1 {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-  }
-
-  .price {
-    margin-left: 0;
-    margin-top: 2px;
   }
 
   .section-title {
@@ -340,8 +296,7 @@ h1 {
 
 .add-btn {
   color:#fff;
-  border-color: var(--price);
-  border-width: 2px;
+  background-color:var(--main);
   color: var(--price);
   width: 30px;
   height: 30px;
@@ -350,6 +305,8 @@ h1 {
   cursor: pointer;
   line-height: 1;
   flex-shrink: 0;
+  display:inline-block;
+  width:30px;
 }
 
 .add-btn:active { transform: scale(0.9); }
@@ -378,8 +335,9 @@ h1 {
   position: absolute;
   top: -4px;
   right: -4px;
-  background: #b33a2b;
-  color: #fff;
+  background: #fff;
+  color: #b33a2b;
+  border:1px solid #b33a2b;
   font-size: 11px;
   font-weight: 700;
   width: 20px;
@@ -469,8 +427,16 @@ h1 {
   gap: 8px;
 }
 
+.cart-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;      /* or another dark color so it shows on white modal */
+}
+
+
 .cart-qty-ctrl button {
-  background: var(--bg);
+  background: var(--price);
   border: 1px solid #ddd;
   width: 26px;
   height: 26px;
@@ -480,7 +446,7 @@ h1 {
   line-height: 1;
 }
 
-.cart-price { font-weight: 700; color: var(--price); font-size: 14px; min-width: 50px; text-align: right; }
+.cart-price { font-weight: 700; color: var(--card); font-size: 14px; min-width: 50px; text-align: right; }
 
 .cart-total { text-align: right; padding: 14px 0 4px; font-size: 15px; }
 
@@ -1029,8 +995,6 @@ h1 {
   🔔 Appeler le serveur
 </button>
 
-<!-- Back to top button -->
-<button class="back-to-top" aria-label="Retour en haut" onclick="window.scrollTo({top:0})">&#8593;</button>
 <!-- Cart Floating Button -->
 <button class="cart-float-btn" onclick="openCart()">
   🛒
@@ -1055,10 +1019,6 @@ h1 {
 </div>
 
 <script>
-// Secure endpoint - REPLACE THIS WITH YOUR OWN BACKEND URL
-const SECURE_ENDPOINT = '/api/send-telegram-message'; // Example: https://yourdomain.com/api/telegram
-
-// Intersection Observer for scroll-reveal animations
 (function() {
   const sections = document.querySelectorAll('.section');
   if ('IntersectionObserver' in window) {
@@ -1080,20 +1040,6 @@ const SECURE_ENDPOINT = '/api/send-telegram-message'; // Example: https://yourdo
     }
   }
 
-  // Back to top button visibility
-  let btn = document.querySelector('.back-to-top');
-  let scrollTimer;
-  window.addEventListener('scroll', function() {
-    if (scrollTimer) return;
-    scrollTimer = setTimeout(function() {
-      scrollTimer = null;
-      if (window.scrollY > 400) {
-        btn.classList.add('show');
-      } else {
-        btn.classList.remove('show');
-      }
-    }, 100);
-  }, { passive: true });
 
   // Highlight active nav link on scroll
   let navLinks = document.querySelectorAll('.nav a');
@@ -1117,7 +1063,7 @@ const SECURE_ENDPOINT = '/api/send-telegram-message'; // Example: https://yourdo
       }
       for (let i = 0; i < navLinks.length; i++) {
         if (i === activeIdx) {
-          navLinks[i].style.background = '#c09a1b';
+          navLinks[i].style.background = '#b33a2b';
           navLinks[i].style.color = '#fff';
         } else {
           navLinks[i].style.background = '';
@@ -1184,18 +1130,19 @@ function openCart() {
     let total = 0;
     body.innerHTML = keys.map(name => {
       const item = cart[name];
-      // Use the first price if dual pricing (e.g. "7DT / 13DT")
       const numPrice = parseFloat(item.price);
-      total += numPrice * item.qty;
+      const lineTotal = numPrice * item.qty;
+      total += lineTotal;
+      const safeName = name.replace(/'/g, "\\'");
       return `
         <div class="cart-row">
           <span class="cart-name">${name}</span>
           <div class="cart-qty-ctrl">
-            <button onclick="changeQty('${name}', -1)">−</button>
+            <button onclick="changeQty('${safeName}', -1)">−</button>
             <span>${item.qty}</span>
-            <button onclick="changeQty('${name}', 1)">+</button>
+            <button onclick="changeQty('${safeName}', 1)">+</button>
           </div>
-          <span class="cart-price">${(numPrice * item.qty).toFixed(1)}DT</span>
+          <span class="cart-price">${lineTotal.toFixed(1)}DT</span>
         </div>`;
     }).join('') + `<div class="cart-total">Total : <strong>${total.toFixed(1)}DT</strong></div>`;
   }
@@ -1228,13 +1175,16 @@ function sendOrder() {
     return { name: name, qty: item.qty, price: numPrice };
   });
 
+  const notes = document.getElementById('order-notes').value || '';
+
   fetch(`${BACKEND_URL}/send-order`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       table: TABLE_NUMBER,
       items: items,
-      total: total
+      total: total,
+      notes: notes          // ← send notes
     })
   })
   .then(r => {
@@ -1245,6 +1195,7 @@ function sendOrder() {
     alert("✅ Commande #" + data.order_no + " envoyée au serveur pour validation !");
     Object.keys(cart).forEach(k => delete cart[k]);
     updateCartBadge();
+    document.getElementById('order-notes').value = '';   // clear notes
     closeCart();
   })
   .catch(err => {
@@ -1252,6 +1203,7 @@ function sendOrder() {
     alert("Erreur d'envoi. Vérifiez votre connexion ou contactez le gérant.");
   });
 }
+
 
 
 </script>
