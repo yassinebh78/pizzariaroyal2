@@ -1241,14 +1241,15 @@ function sendOrder() {
     if (!r.ok) throw new Error("Server responded " + r.status);
     return r.json();
   })
-  .then(() => {
-    alert("✅ Commande envoyée au serveur pour validation !");
   .then(data => {
     alert("✅ Commande #" + data.order_no + " envoyée au serveur pour validation !");
     Object.keys(cart).forEach(k => delete cart[k]);
     updateCartBadge();
     closeCart();
-@@ -1253,6 +1253,7 @@
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Erreur d'envoi. Vérifiez votre connexion ou contactez le gérant.");
   });
 }
 
