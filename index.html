@@ -337,6 +337,12 @@ h1 {
   justify-content: center;
 }
 
+.emoji-icon {
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+  font-style: normal;
+  line-height: 1;
+}
+
 #cart-badge {
   position: absolute;
   top: -4px;
@@ -1529,7 +1535,7 @@ h1 {
 
 <!-- Cart Floating Button -->
 <button class="cart-float-btn" onclick="openCart()">
-  🛒
+  <span class="emoji-icon" aria-hidden="true">🛒</span>
   <span id="cart-badge" style="display:none">0</span>
 </button>
 
@@ -1571,6 +1577,10 @@ h1 {
     <div id="customize-supplements-block" class="customize-block">
       <div class="customize-label">Supplements</div>
       <div id="customize-supplements" class="customize-supplements"></div>
+    </div>
+    <div id="customize-flavors-block" class="customize-block">
+      <div class="customize-label">Saveur</div>
+      <div id="customize-flavors" class="customize-supplements"></div>
     </div>
     <div class="customize-block">
       <div class="customize-label">Note</div>
@@ -1812,7 +1822,7 @@ const SUPPLEMENTS = [
   { name: 'X2 MERGUEZ', price: 2 }
 ];
 const FLAVOR_OPTIONS = {
-  'Boisson Standard': ['Coca Cola', 'Fanta', 'Appla', 'Boga Lemon', 'Boga Cidre', 'Schweppes'],
+  'Boisson Standard': ['Coca', 'Fanta', 'Boga Cidre', 'Appla'],
   'Canette': ['Coca Cola', 'Fanta', 'Appla', 'Boga Lemon', 'Boga Cidre', 'Schweppes'],
   'Boisson 1L': ['Coca Cola', 'Fanta', 'Boga Lemon', 'Boga Cidre']
 };
@@ -1867,11 +1877,11 @@ function normalizeStaticUiText() {
   }
 
   const sectionTitles = {
-    pizzas: { label: 'Pizzas', badge: 'Mini / Moyenne' },
-    sandwiches: { label: 'Sandwiches Tabouna' },
-    libanais: { label: 'Libanais' },
-    plats: { label: 'Plats' },
-    boissons: { label: 'Boissons' }
+    pizzas: { label: '🍕 Pizzas', badge: 'Mini / Moyenne' },
+    sandwiches: { label: '🥪 Sandwiches Tabouna' },
+    libanais: { label: '🌯 Libanais' },
+    plats: { label: '🍽️ Plats' },
+    boissons: { label: '🥤 Boissons' }
   };
 
   Object.keys(sectionTitles).forEach(sectionId => {
@@ -2263,17 +2273,40 @@ function renderCustomizationSupplements() {
   }).join('');
 }
 
+function renderCustomizationFlavors() {
+  const flavorsBlock = document.getElementById('customize-flavors-block');
+  const flavorsContainer = document.getElementById('customize-flavors');
+  if (!pendingCustomizationItem || !flavorsBlock || !flavorsContainer) {
+    return;
+  }
+
+  const flavorChoices = FLAVOR_OPTIONS[pendingCustomizationItem.name] || [];
+  if (flavorChoices.length === 0) {
+    flavorsBlock.style.display = 'none';
+    flavorsContainer.innerHTML = '';
+    return;
+  }
+
+  flavorsBlock.style.display = '';
+  flavorsContainer.innerHTML = flavorChoices.map(flavor => {
+    const isSelected = pendingCustomizationItem.flavor === flavor;
+    return `<button type="button" class="item-supplement-btn${isSelected ? ' selected' : ''}" onclick="setPendingFlavor('${escapeJsString(flavor)}')">${escapeHtml(flavor)}</button>`;
+  }).join('');
+}
+
 function startItemCustomization(name, price) {
   pendingCustomizationItem = {
     name: name,
     price: Number(price),
-    supplements: []
+    supplements: [],
+    flavor: ''
   };
 
   document.getElementById('customize-item-name').textContent = name;
   document.getElementById('customize-item-price').textContent = `${Number(price).toFixed(1)}DT`;
   document.getElementById('customize-note').value = '';
   renderCustomizationSupplements();
+  renderCustomizationFlavors();
   document.getElementById('customize-modal').style.display = 'flex';
 }
 
@@ -2298,6 +2331,15 @@ function togglePendingSupplement(supplementIndexValue) {
   renderCustomizationSupplements();
 }
 
+function setPendingFlavor(flavorValue) {
+  if (!pendingCustomizationItem || !canChooseFlavor(pendingCustomizationItem.name)) {
+    return;
+  }
+
+  pendingCustomizationItem.flavor = pendingCustomizationItem.flavor === flavorValue ? '' : flavorValue;
+  renderCustomizationFlavors();
+}
+
 function confirmCustomization() {
   if (!pendingCustomizationItem) {
     return;
@@ -2305,7 +2347,8 @@ function confirmCustomization() {
 
   const configuredItem = createCartItem(pendingCustomizationItem.name, pendingCustomizationItem.price, {
     note: document.getElementById('customize-note').value,
-    supplements: pendingCustomizationItem.supplements
+    supplements: pendingCustomizationItem.supplements,
+    flavor: pendingCustomizationItem.flavor
   });
 
   addConfiguredItemToCart(configuredItem);
