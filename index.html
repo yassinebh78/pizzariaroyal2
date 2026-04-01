@@ -1860,7 +1860,7 @@ function escapeJsString(value) {
 }
 
 function normalizeStaticUiText() {
-  const navLabels = ['Pizzas', 'Sandwiches', 'Libanais', 'Plats', 'Boissons'];
+  const navLabels = ['🍕 Pizzas', '🥪 Sandwiches', '🌯 Libanais', '🍽️ Plats', '🥤 Boissons'];
   const navLinks = document.querySelectorAll('.nav a');
   for (let i = 0; i < navLinks.length && i < navLabels.length; i++) {
     navLinks[i].textContent = navLabels[i];
