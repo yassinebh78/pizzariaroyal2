@@ -1492,10 +1492,6 @@ h1 {
       <span class="order-stage-dot"></span>
       <span class="order-stage-label">Preparation</span>
     </div>
-    <div id="order-stage-ready" class="order-stage">
-      <span class="order-stage-dot"></span>
-      <span class="order-stage-label">Pret</span>
-    </div>
   </div>
 </div>
 
@@ -2035,13 +2031,11 @@ function renderOrderStatusCard(order) {
     text.textContent = 'Votre commande a ete envoyee au restaurant.';
     setStageState('order-stage-received', 'active');
     setStageState('order-stage-preparing', '');
-    setStageState('order-stage-ready', '');
   } else if (status === 'accepted') {
     title.textContent = 'Commande acceptee';
     text.textContent = 'Le restaurant a confirme votre commande.';
     setStageState('order-stage-received', 'done');
     setStageState('order-stage-preparing', 'active');
-    setStageState('order-stage-ready', '');
   } else if (status === 'preparing') {
     title.textContent = 'Commande acceptee';
     text.textContent = waitingMinutes
@@ -2052,25 +2046,16 @@ function renderOrderStatusCard(order) {
     }
     setStageState('order-stage-received', 'done');
     setStageState('order-stage-preparing', 'active');
-    setStageState('order-stage-ready', '');
-  } else if (status === 'ready') {
-    title.textContent = 'Commande prete';
-    text.textContent = 'Votre commande est prete.';
-    setStageState('order-stage-received', 'done');
-    setStageState('order-stage-preparing', 'done');
-    setStageState('order-stage-ready', 'active');
   } else if (status === 'refused') {
     title.textContent = 'Commande refusee';
     text.textContent = 'Le restaurant ne peut pas traiter cette commande.';
     setStageState('order-stage-received', 'done');
     setStageState('order-stage-preparing', '');
-    setStageState('order-stage-ready', '');
   } else {
     title.textContent = 'Commande en cours';
     text.textContent = 'Nous mettons a jour le statut de votre commande.';
     setStageState('order-stage-received', 'active');
     setStageState('order-stage-preparing', '');
-    setStageState('order-stage-ready', '');
   }
 
   card.classList.add('show');
@@ -2098,7 +2083,7 @@ function pollOrderStatus() {
     .then(order => {
       renderOrderStatusCard(order);
       stopOrderStatusPolling();
-      if (order.status !== 'refused' && order.status !== 'ready') {
+      if (order.status !== 'refused' && order.status !== 'preparing') {
         orderStatusPollTimer = setTimeout(pollOrderStatus, 5000);
       }
     })
