@@ -1564,7 +1564,7 @@ h1 {
   <div class="modal-box">
     <div class="modal-header">
       <h2>Personnaliser</h2>
-      <button onclick="closeCustomizationModal()" class="close-btn">âœ•</button>
+      <button onclick="closeCustomizationModal()" class="close-btn">✕</button>
     </div>
     <div id="customize-item-name" class="customize-title"></div>
     <div id="customize-item-price" class="customize-subtitle"></div>
@@ -2020,7 +2020,7 @@ function addToCart(name, price) {
     if (existingItem) {
       existingItem.qty += 1;
       updateCartBadge();
-      showToast(`${name} ajoutÃ© âœ“`);
+      showToast(`${name} ajoute ✓`);
       return;
     }
   }
