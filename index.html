@@ -2,10 +2,12 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="google-site-verification" content="r00p1zvTZ0QdCSA-AeOiLJXN4rn4I1S_MB5IXqZObsM" />
+<!-- Search Console verification -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Pizzaria Royal - Menu de pizzas, sandwiches, libanais, plats et boissons">
 <meta name="theme-color" content="#c09a1b">
-<title>Pizzaria Royal</title>
+<title>Pizzaria Royal </title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
@@ -165,6 +167,13 @@ h1 {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
+.menu-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
 .menu-item:active {
   transform: scale(0.99);
 }
@@ -207,7 +216,7 @@ h1 {
   }
 }
 
-
+@media (max-width: 480px) {
   .nav {
     padding: 0 10px;
     gap: 4px;
@@ -240,6 +249,7 @@ h1 {
     font-size: 18px;
   }
 }
+  
 
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
@@ -366,6 +376,53 @@ h1 {
   transform: translateX(-50%) translateY(0);
 }
 
+.notice-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 8, 8, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+  z-index: 1100;
+}
+
+.notice-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.notice-box {
+  width: min(320px, calc(100vw - 32px));
+  padding: 18px 18px 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.22);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.22);
+  color: #fff;
+  text-align: center;
+}
+
+.notice-box.error {
+  background: rgba(115, 22, 22, 0.45);
+  border-color: rgba(255,255,255,0.16);
+}
+
+.notice-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.notice-text {
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 /* Modal */
 .modal-overlay {
   display: none;
@@ -378,13 +435,14 @@ h1 {
 }
 
 .modal-box {
-  background: #fff;
+  background: linear-gradient(180deg, #ffffff 0%, #fbf7f2 100%);
   width: 100%;
   max-width: 480px;
   border-radius: 20px 20px 0 0;
-  padding: 20px;
+  padding: 18px 18px 20px;
   max-height: 80vh;
   overflow-y: auto;
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.14);
 }
 
 .modal-header {
@@ -408,43 +466,75 @@ h1 {
 
 .cart-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #f0f0f0;
-  gap: 8px;
+  flex-direction: column;
+  padding: 12px;
+  border: 1px solid #eee4d8;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.86);
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
-.cart-name { flex: 1; font-size: 14px; font-weight: 600; }
+.cart-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
 
 .cart-qty-ctrl {
   display: flex;
   align-items: center;
   gap: 8px;
+  background: #f6f1ea;
+  border-radius: 999px;
+  padding: 4px;
 }
 
 .cart-name {
   flex: 1;
   font-size: 14px;
   font-weight: 600;
-  color: #222;      /* or another dark color so it shows on white modal */
+  color: #222;
+  line-height: 1.35;
 }
 
 
 .cart-qty-ctrl button {
-  background: var(--price);
-  border: 1px solid #ddd;
-  width: 26px;
-  height: 26px;
+  background: #fff;
+  border: 1px solid #e4d8ca;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   font-size: 16px;
   cursor: pointer;
   line-height: 1;
+  color: #3a2a22;
 }
 
-.cart-price { font-weight: 700; color: var(--card); font-size: 14px; min-width: 50px; text-align: right; }
+.cart-qty-value {
+  min-width: 18px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #3a2a22;
+}
 
-.cart-total { text-align: right; padding: 14px 0 4px; font-size: 15px; }
+.cart-price {
+  font-weight: 700;
+  color: var(--card);
+  font-size: 14px;
+  min-width: 54px;
+  text-align: right;
+  padding-top: 6px;
+}
+
+.cart-total {
+  text-align: right;
+  padding: 12px 2px 4px;
+  font-size: 15px;
+  color: #2a211d;
+}
 
 .send-order-btn {
   width: 100%;
@@ -458,6 +548,7 @@ h1 {
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s ease;
+  box-shadow: 0 10px 24px rgba(179,58,43,0.25);
 }
 
 .send-order-btn:hover { background: var(--main-dark); }
@@ -466,17 +557,321 @@ h1 {
   cursor: not-allowed;
 }
 
-/* Order notes textarea */
-.order-notes {
+.item-note {
   width: 100%;
-  min-height: 60px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid #e2d6c8;
+  border-radius: 10px;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 12px;
   resize: vertical;
-  margin-top: 10px;
+  color: #222;
+  background: #fffdf9;
+  line-height: 1.4;
+}
+
+.item-note::placeholder {
+  color: #9b8f85;
+}
+
+.item-note:focus {
+  outline: none;
+  border-color: rgba(179,58,43,0.55);
+  box-shadow: 0 0 0 3px rgba(179,58,43,0.12);
+}
+
+.item-supplements {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-supplements-toggle {
+  align-self: flex-start;
+  border: 1px dashed #d7c5b4;
+  background: #fffaf3;
+  color: #8a5f42;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.item-flavors {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-flavors-toggle {
+  align-self: flex-start;
+  border: 1px dashed #d7c5b4;
+  background: #fffaf3;
+  color: #8a5f42;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.item-flavors-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8a5f42;
+}
+
+.item-flavors-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.item-flavor-btn {
+  border: 1px solid #e2d6c8;
+  background: #fff;
+  color: #553d2d;
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.item-flavor-btn.selected {
+  background: rgba(179,58,43,0.12);
+  border-color: rgba(179,58,43,0.45);
+  color: #8a2f23;
+}
+
+.item-flavors.is-collapsed .item-flavors-label,
+.item-flavors.is-collapsed .item-flavors-list {
+  display: none;
+}
+
+.item-supplements-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8a5f42;
+}
+
+.item-supplements-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.item-supplement-btn {
+  border: 1px solid #e2d6c8;
+  background: #fff;
+  color: #553d2d;
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.item-supplement-btn.selected {
+  background: rgba(179,58,43,0.12);
+  border-color: rgba(179,58,43,0.45);
+  color: #8a2f23;
+}
+
+.item-supplement-btn:active {
+  transform: scale(0.97);
+}
+
+.item-supplements.is-collapsed .item-supplements-label,
+.item-supplements.is-collapsed .item-supplements-list {
+  display: none;
+}
+
+.customize-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2a211d;
+  margin-bottom: 6px;
+}
+
+.customize-subtitle {
+  font-size: 12px;
+  color: #6f5f53;
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+.customize-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.customize-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8a5f42;
+}
+
+.customize-supplements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.order-status-card {
+  position: fixed;
+  left: 20px;
+  right: 20px;
+  bottom: 146px;
+  z-index: 998;
+  background: rgba(255, 250, 244, 0.38);
+  color: #2c211c;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-shadow: 0 18px 36px rgba(0,0,0,0.16);
+  display: none;
+  overflow: hidden;
+  isolation: isolate;
+  backdrop-filter: blur(24px) saturate(155%);
+  -webkit-backdrop-filter: blur(24px) saturate(155%);
+}
+
+.order-status-card.show {
+  display: block;
+}
+
+.order-status-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.32), rgba(255,255,255,0.14)),
+    rgba(255, 249, 244, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    inset 0 -1px 0 rgba(255,255,255,0.16);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.order-status-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.order-status-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9b7257;
+  margin-bottom: 6px;
+}
+
+.order-status-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #2c211c;
+}
+
+.order-status-text {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #5c473b;
+  margin-top: 6px;
+}
+
+.order-status-meta {
+  font-size: 12px;
+  color: #7c6253;
+  margin-top: 6px;
+}
+
+.order-status-stages {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.order-stage {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #7c6253;
+}
+
+.order-stage-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d8c4b3;
+  flex-shrink: 0;
+}
+
+.order-stage.active .order-stage-dot {
+  background: var(--main);
+}
+
+.order-stage.done .order-stage-dot {
+  background: #2e8b57;
+}
+
+.order-stage-label {
+  font-weight: 600;
+  color: inherit;
+}
+
+@media (max-width: 480px) {
+  .modal-box {
+    padding: 16px 14px 18px;
+  }
+
+  .cart-row {
+    padding: 11px;
+    gap: 8px;
+  }
+
+  .cart-row-top {
+    gap: 6px;
+  }
+
+  .cart-name {
+    font-size: 13px;
+  }
+
+  .cart-price {
+    font-size: 13px;
+    min-width: 48px;
+  }
+
+  .item-note {
+    min-height: 40px;
+    font-size: 11.5px;
+  }
+
+  .order-status-card {
+    left: 14px;
+    right: 14px;
+    bottom: 138px;
+    padding: 13px 14px;
+  }
 }
 </style>
 </head>
@@ -489,7 +884,6 @@ h1 {
   <a href="#libanais">🌯 Libanais</a>
   <a href="#plats">🍽️ Plats</a>
   <a href="#boissons">🥤 Boissons</a>
-  <a href="#supplements">🥤 Supplements</a>
 </nav>
 
 <div class="container">
@@ -558,7 +952,7 @@ h1 {
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
         <div class="price">8.5DT</div>
         <button class="add-btn size-btn" onclick="addToCart('Pizza Regina (Mini)', 8.5)">+</button>
-        <div class="price">1DT</div>
+        <div class="price">16DT</div>
         <button class="add-btn size-btn" onclick="addToCart('Pizza Regina (Moy)', 16)">+</button>
       </div>
     </div>
@@ -597,7 +991,7 @@ h1 {
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
         <div class="price">10DT</div>
         <button class="add-btn size-btn" onclick="addToCart('Pizza Royal (Mini)', 10)">+</button>
-        <div class="price">17DT</div>
+        <div class="price">19DT</div>
         <button class="add-btn size-btn" onclick="addToCart('Pizza Royal (Moy)', 19)">+</button>
       </div>
     </div>
@@ -756,6 +1150,28 @@ h1 {
 
     <div class="menu-item">
       <div class="item-info">
+        <h3>Libanais Chawarma</h3>
+        <p>Harissa, salade mechouia, chawarma, fromage, frites</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div class="price">8.5DT</div>
+        <button class="add-btn size-btn" onclick="addToCart('Libanais Chawarma', 8.5)">+</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-info">
+        <h3>Libanais Merguez</h3>
+        <p>Harissa, salade mechouia, merguez, fromage, frites</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div class="price">8.5DT</div>
+        <button class="add-btn size-btn" onclick="addToCart('Libanais Merguez', 8.5)">+</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-info">
         <h3 class="c2">CHICKEN CHICKA</h3>
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
@@ -797,12 +1213,56 @@ h1 {
 
     <div class="menu-item">
       <div class="item-info">
-        <h3>Makloub</h3>
+        <h3>Mini Baguette Farcie Chawarma</h3>
+        <p>Double fromage, harissa, salade mechouia, chawarma, frites</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div class="price">9DT</div>
+        <button class="add-btn size-btn" onclick="addToCart('Mini Baguette Farcie Chawarma', 9)">+</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-info">
+        <h3>Mini Baguette Farcie Merguez</h3>
+        <p>Double fromage, harissa, salade mechouia, merguez, frites</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div class="price">9DT</div>
+        <button class="add-btn size-btn" onclick="addToCart('Mini Baguette Farcie Merguez', 9)">+</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-info">
+        <h3>Makloub Escalope</h3>
         <p>Double fromage, harissa, salade mechouia, escalope, frites</p>
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
         <div class="price">10DT</div>
-        <button class="add-btn size-btn" onclick="addToCart('ma9loub', 10)">+</button>
+        <button class="add-btn size-btn" onclick="addToCart('Makloub Escalope', 10)">+</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-info">
+        <h3>Makloub Chawarma</h3>
+        <p>Double fromage, harissa, salade mechouia, chawarma, frites</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div class="price">10DT</div>
+        <button class="add-btn size-btn" onclick="addToCart('Makloub Chawarma', 10)">+</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-info">
+        <h3>Makloub Merguez</h3>
+        <p>Double fromage, harissa, salade mechouia, merguez, frites</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div class="price">10DT</div>
+        <button class="add-btn size-btn" onclick="addToCart('Makloub Merguez', 10)">+</button>
       </div>
     </div>
 
@@ -813,6 +1273,26 @@ h1 {
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
         <div class="price">15DT</div>
         <button class="add-btn size-btn" onclick="addToCart('Baguette Farcie', 15)">+</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-info">
+        <h3>Baguette Farcie Chawarma</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div class="price">15DT</div>
+        <button class="add-btn size-btn" onclick="addToCart('Baguette Farcie Chawarma', 15)">+</button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-info">
+        <h3>Baguette Farcie Merguez</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div class="price">15DT</div>
+        <button class="add-btn size-btn" onclick="addToCart('Baguette Farcie Merguez', 15)">+</button>
       </div>
     </div>
 
@@ -898,117 +1378,51 @@ h1 {
       </div>
     </div>
 
+    <div class="menu-item">
+      <div class="item-info">
+        <h3>Frites</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div class="price">3DT</div>
+        <button class="add-btn size-btn" onclick="addToCart('Plats Frites', 3)">+</button>
+      </div>
+    </div>
+
     
   </div>
 
 
-   <!-- SUPPLEMENTS -->
-  <div class="section" id="supplements">
-    <div class="section-title">➕ Suppléments</div>
-
-    <div class="menu-item">
-      <div class="item-info">
-        <h3>Oeuf</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-        <div class="price">1DT</div>
-        <button class="add-btn size-btn" onclick="addToCart('Oeuf', 1)">+</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-info">
-        <h3>🧀🍔Fromages Carré</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-        <div class="price">1DT</div>
-        <button class="add-btn size-btn" onclick="addToCart('Fromages Carré', 1)">+</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-info">
-        <h3>🧀Fromage Special</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-        <div class="price">2DT</div>
-        <button class="add-btn size-btn" onclick="addToCart('Fromage Special', 2)">+</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-info">
-        <h3>🍟Frites</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-        <div class="price">3DT</div>
-        <button class="add-btn size-btn" onclick="addToCart('Frites', 3)">+</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-info">
-        <h3>X2 ESCALOPE</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-        <div class="price">2DT</div>
-        <button class="add-btn size-btn" onclick="addToCart('X2 ESCALOPE', 2)">+</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-info">
-        <h3>X2 SHAWARMA</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-        <div class="price">2DT</div>
-        <button class="add-btn size-btn" onclick="addToCart('X2 ESCALOPE', 2)">+</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <div class="item-info">
-        <h3>X2 MERGUEZ</h3>
-      </div>
-      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-        <div class="price">2DT</div>
-        <button class="add-btn size-btn" onclick="addToCart('X2 MERGUEZ', 2)">+</button>
-      </div>
-    </div>
-  </div>
-
-  
   <!-- BOISSONS -->
   <div class="section" id="boissons">
     <div class="section-title">🥤 Boissons</div>
 
     <div class="menu-item">
       <div class="item-info">
-        <h3>Coca Standard</h3>
+        <h3>Boisson Standard</h3>
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
         <div class="price">1.5DT</div>
-        <button class="add-btn size-btn" onclick="addToCart('Coca Standard', 1.5)">+</button>
+        <button class="add-btn size-btn" onclick="addToCart('Boisson Standard', 1.5)">+</button>
       </div>
     </div>
 
     <div class="menu-item">
       <div class="item-info">
-        <h3>Coca Canette</h3>
+        <h3>Canette</h3>
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
         <div class="price">2.5DT</div>
-        <button class="add-btn size-btn" onclick="addToCart('Coca Canette', 2.5)">+</button>
+        <button class="add-btn size-btn" onclick="addToCart('Canette', 2.5)">+</button>
       </div>
     </div>
 
     <div class="menu-item">
       <div class="item-info">
-        <h3>Coca 1L</h3>
+        <h3>Boisson 1L</h3>
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
         <div class="price">3.5DT</div>
-        <button class="add-btn size-btn" onclick="addToCart('Coca 1L', 3.5)">+</button>
+        <button class="add-btn size-btn" onclick="addToCart('Boisson 1L', 3.5)">+</button>
       </div>
     </div>
 
@@ -1057,6 +1471,54 @@ h1 {
 <!-- Toast -->
 <div id="toast" class="toast"></div>
 
+<div id="notice-overlay" class="notice-overlay" onclick="hideNotice()">
+  <div id="notice-box" class="notice-box" onclick="event.stopPropagation()">
+    <div id="notice-title" class="notice-title"></div>
+    <div id="notice-text" class="notice-text"></div>
+  </div>
+</div>
+
+<div id="order-status-card" class="order-status-card" aria-live="polite">
+  <div id="order-status-kicker" class="order-status-kicker"></div>
+  <div id="order-status-title" class="order-status-title"></div>
+  <div id="order-status-text" class="order-status-text"></div>
+  <div id="order-status-meta" class="order-status-meta"></div>
+  <div class="order-status-stages">
+    <div id="order-stage-received" class="order-stage">
+      <span class="order-stage-dot"></span>
+      <span class="order-stage-label">Commande recue</span>
+    </div>
+    <div id="order-stage-preparing" class="order-stage">
+      <span class="order-stage-dot"></span>
+      <span class="order-stage-label">Preparation</span>
+    </div>
+    <div id="order-stage-ready" class="order-stage">
+      <span class="order-stage-dot"></span>
+      <span class="order-stage-label">Pret</span>
+    </div>
+  </div>
+</div>
+
+<div id="customize-modal" class="modal-overlay" onclick="if(event.target===this)closeCustomizationModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Personnaliser</h2>
+      <button onclick="closeCustomizationModal()" class="close-btn">âœ•</button>
+    </div>
+    <div id="customize-item-name" class="customize-title"></div>
+    <div id="customize-item-price" class="customize-subtitle"></div>
+    <div id="customize-supplements-block" class="customize-block">
+      <div class="customize-label">Supplements</div>
+      <div id="customize-supplements" class="customize-supplements"></div>
+    </div>
+    <div class="customize-block">
+      <div class="customize-label">Note</div>
+      <textarea id="customize-note" class="item-note" placeholder="Note optionnelle pour cet article"></textarea>
+    </div>
+    <button class="send-order-btn" onclick="confirmCustomization()">Ajouter au panier</button>
+  </div>
+</div>
+
 <!-- Cart Modal -->
 <div id="cart-modal" class="modal-overlay" onclick="if(event.target===this)closeCart()">
   <div class="modal-box">
@@ -1066,7 +1528,6 @@ h1 {
     </div>
     <div id="cart-body"></div>
     <!-- Order notes field -->
-    <textarea id="order-notes" class="order-notes" placeholder="Notes spéciales (ex: sans oignon, bien cuit)..."></textarea>
     <button class="send-order-btn" id="send-order-btn" onclick="sendOrder()">📤 Envoyer la commande</button>
   </div>
 </div>
@@ -1129,6 +1590,343 @@ h1 {
 const params = new URLSearchParams(window.location.search);
 const TABLE_NUMBER = params.get('table') || '?';
 const BACKEND_URL = "https://pizza-royal-backend.onrender.com"; // ← YOUR URL HERE
+let noticeTimer;
+let currentOrderNumber = null;
+let orderStatusPollTimer = null;
+const PIZZAS = [
+  {
+    title: 'Margherita',
+    description: 'Sauce tomate, fromage, origan, olives',
+    sizes: [
+      { cartName: 'Margherita (Mini)', price: 7, displayPrice: '7DT' },
+      { cartName: 'Margherita (Moy)', price: 12, displayPrice: '12DT' }
+    ]
+  },
+  {
+    title: 'Thon',
+    description: 'Sauce tomate, thon, fromage, olives, poivron, oignon, origan, oeuf',
+    sizes: [
+      { cartName: 'Pizza Thon (Mini)', price: 7.5, displayPrice: '7.5DT' },
+      { cartName: 'Pizza Thon (Moy)', price: 14, displayPrice: '14DT' }
+    ]
+  },
+  {
+    title: 'Orientale',
+    description: 'Sauce tomate, fromage, erguez, poivron, oignon, origan',
+    sizes: [
+      { cartName: 'Pizza Orientale (Mini)', price: 9.5, displayPrice: '9.5DT' },
+      { cartName: 'Pizza Orientale (Moy)', price: 17, displayPrice: '17DT' }
+    ]
+  },
+  {
+    title: 'Calzone',
+    description: 'Sauce tomate, fromage, olives, oignon, salami, origan',
+    sizes: [
+      { cartName: 'Calzone (Mini)', price: 7.5, displayPrice: '7.5DT' },
+      { cartName: 'Calzone (Moy)', price: 14, displayPrice: '14DT' }
+    ]
+  },
+  {
+    title: 'Regina',
+    description: 'Sauce tomate, thon, salami, fromage, olives, origan',
+    sizes: [
+      { cartName: 'Pizza Regina (Mini)', price: 8.5, displayPrice: '8.5DT' },
+      { cartName: 'Pizza Regina (Moy)', price: 16, displayPrice: '16DT' }
+    ]
+  },
+  {
+    title: '4 saisons',
+    description: 'Sauce tomate, fromage, champignons, olives, poivron, oignon, oeuf, thon',
+    sizes: [
+      { cartName: 'Pizza 4 saisons (Mini)', price: 9, displayPrice: '9DT' },
+      { cartName: 'Pizza 4 saisons (Moy)', price: 16, displayPrice: '16DT' }
+    ]
+  },
+  {
+    title: 'Viande Hachee',
+    description: 'Sauce tomate, fromage, olives, viande hachee, oignon, origan, poivron',
+    sizes: [
+      { cartName: 'Pizza Viande Hachee (Mini)', price: 12, displayPrice: '12DT' },
+      { cartName: 'Pizza Viande Hachee (Moy)', price: 23, displayPrice: '23DT' }
+    ]
+  },
+  {
+    title: 'Royal',
+    description: 'Sauce tomate, fromage, salami, merguez, oignon, poivron, champignon, oeuf, olives, origan',
+    sizes: [
+      { cartName: 'Pizza Royal (Mini)', price: 10, displayPrice: '10DT' },
+      { cartName: 'Pizza Royal (Moy)', price: 19, displayPrice: '19DT' }
+    ]
+  },
+  {
+    title: 'Escalope',
+    description: 'Sauce tomate, fromage, escalope, oignon, poivron, champignon, oeuf, olives, origan',
+    sizes: [
+      { cartName: 'Pizza Escalope (Mini)', price: 9, displayPrice: '9DT' },
+      { cartName: 'Pizza Escalope (Moy)', price: 17, displayPrice: '17DT' }
+    ]
+  },
+  {
+    title: '4 fromages',
+    description: 'Sauce tomate, fromage, 4 fromages, olives',
+    sizes: [
+      { cartName: 'Pizza 4 fromages (Mini)', price: 9.5, displayPrice: '9.5DT' },
+      { cartName: 'Pizza 4 fromages (Moy)', price: 18, displayPrice: '18DT' }
+    ]
+  },
+  {
+    title: 'Fruits de mer',
+    description: 'Sauce tomate, fromage, fruits de mer, origan, olives',
+    sizes: [
+      { cartName: 'Fruits de mer (Mini)', price: 12, displayPrice: '12DT' },
+      { cartName: 'Fruits de mer (Moy)', price: 23, displayPrice: '23DT' }
+    ]
+  },
+  {
+    title: 'Galette Thon',
+    description: 'Sauce tomate, fromage, origan, poivron, thon, oignon',
+    sizes: [
+      { cartName: 'Galette Thon (Mini)', price: 8, displayPrice: '8DT' },
+      { cartName: 'Galette Thon (Moy)', price: 15, displayPrice: '15DT' }
+    ]
+  },
+  {
+    title: 'Galette Escalope',
+    description: 'Sauce tomate, fromage, origan, poivron, escalope, oignon',
+    sizes: [
+      { cartName: 'Galette Escalope (Mini)', price: 9.5, displayPrice: '9.5DT' },
+      { cartName: 'Galette Escalope (Moy)', price: 18, displayPrice: '18DT' }
+    ]
+  }
+];
+const SANDWICHES = [
+  { title: 'Sandwich Oeuf', description: 'Harissa, salade, salade mechouia, frites, olives', cartName: 'Sandwich Oeuf', price: 4.5, displayPrice: '4.5DT' },
+  { title: 'Sandwich Salami', description: 'Harissa, salade, salade mechouia, salami, frites, olives', cartName: 'Sandwich Salami', price: 5, displayPrice: '5DT' },
+  { title: 'Sandwich Thon', description: 'Harissa, salade mechouia, thon, frites, olives', cartName: 'Sandwich Thon', price: 6.5, displayPrice: '6.5DT' },
+  { title: 'Sandwich Escalope', description: 'Harissa, salade mechouia, escalope, frites, olives, oeuf', cartName: 'Sandwich Escalope', price: 7.5, displayPrice: '7.5DT' },
+  { title: 'Sandwich Chawarma', description: 'Harissa, salade mechouia, chawarma, frites, olives, oeuf', cartName: 'Sandwich Chawarma', price: 7.5, displayPrice: '7.5DT' },
+  { title: 'Sandwich Merguez', description: 'Harissa, salade mechouia, merguez, frites, olives, oeuf', cartName: 'Sandwich Merguez', price: 8, displayPrice: '8DT' }
+];
+const LIBANAIS = [
+  { title: 'Libanais Escalope', description: 'Harissa, salade mechouia, escalope, fromage, frites', cartName: 'Libanais Escalope', price: 8.5, displayPrice: '8.5DT' },
+  { title: 'Libanais Chawarma', description: 'Harissa, salade mechouia, chawarma, fromage, frites', cartName: 'Libanais Chawarma', price: 8.5, displayPrice: '8.5DT' },
+  { title: 'Libanais Merguez', description: 'Harissa, salade mechouia, merguez, fromage, frites', cartName: 'Libanais Merguez', price: 8.5, displayPrice: '8.5DT' },
+  { title: 'CHICKEN CHICKA', description: '', cartName: 'CHICKEN CHICKA', price: 9, displayPrice: '9DT' },
+  { title: 'TACOS', description: '', cartName: 'TACOS', price: 9, displayPrice: '9DT' },
+  { title: 'CHEESE NAAN', description: '', cartName: 'CHEESE NAAN', price: 9, displayPrice: '9DT' },
+  { title: 'Mini Baguette Farcie', description: 'Double fromage, harissa, salade mechouia, escalope, frites', cartName: 'Mini Baguette Farcie', price: 9, displayPrice: '9DT' },
+  { title: 'Mini Baguette Farcie Chawarma', description: 'Double fromage, harissa, salade mechouia, chawarma, frites', cartName: 'Mini Baguette Farcie Chawarma', price: 9, displayPrice: '9DT' },
+  { title: 'Mini Baguette Farcie Merguez', description: 'Double fromage, harissa, salade mechouia, merguez, frites', cartName: 'Mini Baguette Farcie Merguez', price: 9, displayPrice: '9DT' },
+  { title: 'Makloub Escalope', description: 'Double fromage, harissa, salade mechouia, escalope, frites', cartName: 'Makloub Escalope', price: 10, displayPrice: '10DT' },
+  { title: 'Makloub Chawarma', description: 'Double fromage, harissa, salade mechouia, chawarma, frites', cartName: 'Makloub Chawarma', price: 10, displayPrice: '10DT' },
+  { title: 'Makloub Merguez', description: 'Double fromage, harissa, salade mechouia, merguez, frites', cartName: 'Makloub Merguez', price: 10, displayPrice: '10DT' },
+  { title: 'Baguette Farcie', description: '', cartName: 'Baguette Farcie', price: 15, displayPrice: '15DT' },
+  { title: 'Baguette Farcie Chawarma', description: '', cartName: 'Baguette Farcie Chawarma', price: 15, displayPrice: '15DT' },
+  { title: 'Baguette Farcie Merguez', description: '', cartName: 'Baguette Farcie Merguez', price: 15, displayPrice: '15DT' },
+  { title: 'Hamburger', description: 'Sauce, fromage slice, viande hachee', cartName: 'Hamburger', price: 16, displayPrice: '16DT' }
+];
+const PLATS = [
+  { title: 'Thon Oeuf', description: 'Harissa, salade mechouia, oeuf, frites, olives, thon', cartName: 'Plats Thon Oeuf', price: 10, displayPrice: '10DT' },
+  { title: 'Escalope', description: 'Harissa, salade mechouia, oeuf, frites, olives, escalope', cartName: 'Plats Escalope', price: 13, displayPrice: '13DT' },
+  { title: 'Chawarma', description: 'Harissa, salade mechouia, oeuf, frites, olives, chawarma', cartName: 'Plats Chawarma', price: 13, displayPrice: '13DT' },
+  { title: 'Merguez', description: 'Harissa, salade mechouia, oeuf, frites, olives, merguez', cartName: 'Plats Merguez', price: 15, displayPrice: '15DT' },
+  { title: 'Escalope Pane', description: 'Harissa, salade mechouia, oeuf, frites, olives, escalope pane', cartName: 'Plats Escalope Pane', price: 15, displayPrice: '15DT' },
+  { title: 'Mixte', description: 'Harissa, salade mechouia, oeuf, frites, olives, escalope, chawarma, merguez', cartName: 'Plats Mixte', price: 18, displayPrice: '18DT' },
+  { title: 'Frites', description: '', cartName: 'Plats Frites', price: 3, displayPrice: '3DT' }
+];
+const BOISSONS = [
+  { title: 'Boisson Standard', description: '', cartName: 'Boisson Standard', price: 1.5, displayPrice: '1.5DT' },
+  { title: 'Canette', description: '', cartName: 'Canette', price: 2.5, displayPrice: '2.5DT' },
+  { title: 'Boisson 1L', description: '', cartName: 'Boisson 1L', price: 3.5, displayPrice: '3.5DT' },
+  { title: 'Oh jus 0.5L', description: '', cartName: 'Oh jus 0.5L', price: 2.5, displayPrice: '2.5DT' },
+  { title: 'Eau 0.5L', description: '', cartName: 'Eau 0.5L', price: 1, displayPrice: '1DT' },
+  { title: 'Eau 1.5L', description: '', cartName: 'Eau 1.5L', price: 2, displayPrice: '2DT' }
+];
+const SUPPLEMENTS = [
+  { name: 'Oeuf', price: 1 },
+  { name: 'Fromage Carre', price: 1 },
+  { name: 'Fromage Special', price: 2 },
+  { name: 'X2 ESCALOPE', price: 2 },
+  { name: 'X2 SHAWARMA', price: 2 },
+  { name: 'X2 MERGUEZ', price: 2 }
+];
+const FLAVOR_OPTIONS = {
+  'Boisson Standard': ['Coca Cola', 'Fanta', 'Appla', 'Boga Lemon', 'Boga Cidre', 'Schweppes'],
+  'Canette': ['Coca Cola', 'Fanta', 'Appla', 'Boga Lemon', 'Boga Cidre', 'Schweppes'],
+  'Boisson 1L': ['Coca Cola', 'Fanta', 'Boga Lemon', 'Boga Cidre']
+};
+const NO_SUPPLEMENT_ITEMS = new Set([
+  'Boisson Standard',
+  'Canette',
+  'Boisson 1L',
+  'Oh jus 0.5L',
+  'Eau 0.5L',
+  'Eau 1.5L'
+]);
+
+function showNotice(message, type = 'success') {
+  const overlay = document.getElementById('notice-overlay');
+  const box = document.getElementById('notice-box');
+  const title = document.getElementById('notice-title');
+  const text = document.getElementById('notice-text');
+
+  box.classList.toggle('error', type === 'error');
+  title.textContent = type === 'error' ? 'Erreur' : 'Confirmation';
+  text.textContent = message;
+  overlay.classList.add('show');
+
+  clearTimeout(noticeTimer);
+  noticeTimer = setTimeout(hideNotice, 2200);
+}
+
+function hideNotice() {
+  document.getElementById('notice-overlay').classList.remove('show');
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function escapeJsString(value) {
+  return String(value)
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'");
+}
+
+function normalizeStaticUiText() {
+  const navLabels = ['Pizzas', 'Sandwiches', 'Libanais', 'Plats', 'Boissons'];
+  const navLinks = document.querySelectorAll('.nav a');
+  for (let i = 0; i < navLinks.length && i < navLabels.length; i++) {
+    navLinks[i].textContent = navLabels[i];
+  }
+
+  const sectionTitles = {
+    pizzas: { label: 'Pizzas', badge: 'Mini / Moyenne' },
+    sandwiches: { label: 'Sandwiches Tabouna' },
+    libanais: { label: 'Libanais' },
+    plats: { label: 'Plats' },
+    boissons: { label: 'Boissons' }
+  };
+
+  Object.keys(sectionTitles).forEach(sectionId => {
+    const section = document.getElementById(sectionId);
+    if (!section) {
+      return;
+    }
+
+    const title = section.querySelector('.section-title');
+    if (!title) {
+      return;
+    }
+
+    const config = sectionTitles[sectionId];
+    title.textContent = config.label;
+
+    if (config.badge) {
+      const badge = document.createElement('span');
+      badge.textContent = config.badge;
+      title.appendChild(badge);
+    }
+  });
+}
+
+function renderPizzaMenu() {
+  const pizzaSection = document.getElementById('pizzas');
+  if (!pizzaSection) {
+    return;
+  }
+
+  let pizzaList = document.getElementById('pizza-list');
+  if (!pizzaList) {
+    pizzaList = document.createElement('div');
+    pizzaList.id = 'pizza-list';
+    const sectionTitle = pizzaSection.querySelector('.section-title');
+    if (sectionTitle) {
+      sectionTitle.insertAdjacentElement('afterend', pizzaList);
+    } else {
+      pizzaSection.prepend(pizzaList);
+    }
+  }
+
+  const legacyItems = pizzaSection.querySelectorAll('.menu-item');
+  for (let i = 0; i < legacyItems.length; i++) {
+    legacyItems[i].remove();
+  }
+
+  pizzaList.innerHTML = PIZZAS.map(pizza => {
+    const actionsMarkup = pizza.sizes.map(size => `
+        <div class="price">${escapeHtml(size.displayPrice)}</div>
+        <button class="add-btn size-btn" onclick="startItemCustomization('${escapeJsString(size.cartName)}', ${size.price})">+</button>
+    `).join('');
+
+    return `
+      <div class="menu-item">
+        <div class="item-info">
+          <h3>${escapeHtml(pizza.title)}</h3>
+          <p>${escapeHtml(pizza.description)}</p>
+        </div>
+        <div class="menu-actions">${actionsMarkup}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderSinglePriceMenu(sectionId, items, listId) {
+  const section = document.getElementById(sectionId);
+  if (!section) {
+    return;
+  }
+
+  let list = document.getElementById(listId);
+  if (!list) {
+    list = document.createElement('div');
+    list.id = listId;
+    const sectionTitle = section.querySelector('.section-title');
+    if (sectionTitle) {
+      sectionTitle.insertAdjacentElement('afterend', list);
+    } else {
+      section.prepend(list);
+    }
+  }
+
+  const legacyItems = Array.from(section.querySelectorAll('.menu-item')).filter(item => !list.contains(item));
+  for (let i = 0; i < legacyItems.length; i++) {
+    legacyItems[i].remove();
+  }
+
+  list.innerHTML = items.map(item => `
+      <div class="menu-item">
+        <div class="item-info">
+          <h3>${escapeHtml(item.title)}</h3>
+          ${item.description ? `<p>${escapeHtml(item.description)}</p>` : ''}
+        </div>
+        <div class="menu-actions">
+          <div class="price">${escapeHtml(item.displayPrice)}</div>
+          <button class="add-btn size-btn" onclick="startItemCustomization('${escapeJsString(item.cartName)}', ${item.price})">+</button>
+        </div>
+      </div>
+  `).join('');
+}
+
+normalizeStaticUiText();
+renderPizzaMenu();
+renderSinglePriceMenu('sandwiches', SANDWICHES, 'sandwich-list');
+renderSinglePriceMenu('libanais', LIBANAIS, 'libanais-list');
+renderSinglePriceMenu('plats', PLATS, 'plats-list');
+renderSinglePriceMenu('boissons', BOISSONS, 'boissons-list');
+
+function canHaveSupplements(itemName) {
+  return !NO_SUPPLEMENT_ITEMS.has(itemName);
+}
+
+function canChooseFlavor(itemName) {
+  return Object.prototype.hasOwnProperty.call(FLAVOR_OPTIONS, itemName);
+}
 
 function callWaiter() {
   fetch(`${BACKEND_URL}/call-waiter`, {
@@ -1141,27 +1939,38 @@ function callWaiter() {
     return r.json();
   })
   .then(() => {
-    alert("✅ Le serveur arrive.");
+    showNotice("Le serveur arrive.");
   })
   .catch(err => {
     console.error(err);
-    alert("Erreur d'envoi. Vérifiez votre connexion ou contactez le gérant.");
+    showNotice("Erreur d'envoi. Vérifiez votre connexion ou contactez le gérant.", 'error');
   });
 }
-const cart = {};
+const cart = [];
+let pendingCustomizationItem = null;
 
 function addToCart(name, price) {
-  if (cart[name]) {
-    cart[name].qty += 1;
-  } else {
-    cart[name] = { price, qty: 1 };
+  if (!canHaveSupplements(name)) {
+    const existingItem = cart.find(item =>
+      item.name === name &&
+      !canHaveSupplements(item.name) &&
+      !canChooseFlavor(item.name)
+    );
+    if (existingItem) {
+      existingItem.qty += 1;
+      updateCartBadge();
+      showToast(`${name} ajoutÃ© âœ“`);
+      return;
+    }
   }
+
+  cart.push({ name: name, price: price, qty: 1, note: '', supplements: [], showSupplements: false, flavor: '', showFlavors: false });
   updateCartBadge();
   showToast(`${name} ajouté ✓`);
 }
 
 function updateCartBadge() {
-  const total = Object.values(cart).reduce((s, i) => s + i.qty, 0);
+  const total = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
   document.getElementById('cart-badge').textContent = total;
   document.getElementById('cart-badge').style.display = total > 0 ? 'flex' : 'none';
 }
@@ -1173,38 +1982,437 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 1800);
 }
 
+function formatEstimatedTime(value) {
+  if (!value) {
+    return '';
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return '';
+  }
+
+  return date.toLocaleTimeString('fr-FR', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+function setStageState(stageId, state) {
+  const stage = document.getElementById(stageId);
+  if (!stage) {
+    return;
+  }
+
+  stage.classList.remove('done', 'active');
+  if (state === 'done') {
+    stage.classList.add('done');
+  } else if (state === 'active') {
+    stage.classList.add('active');
+  }
+}
+
+function renderOrderStatusCard(order) {
+  const card = document.getElementById('order-status-card');
+  const kicker = document.getElementById('order-status-kicker');
+  const title = document.getElementById('order-status-title');
+  const text = document.getElementById('order-status-text');
+  const meta = document.getElementById('order-status-meta');
+  if (!card || !kicker || !title || !text || !meta) {
+    return;
+  }
+
+  const status = order && order.status ? order.status : 'received';
+  const orderNumber = order && order.order_no ? order.order_no : currentOrderNumber;
+  const waitingMinutes = order && order.waiting_time_minutes ? Number(order.waiting_time_minutes) : null;
+  const estimatedTime = formatEstimatedTime(order && order.estimated_ready_at);
+
+  kicker.textContent = orderNumber ? `Commande #${orderNumber}` : 'Commande';
+  meta.textContent = '';
+
+  if (status === 'received') {
+    title.textContent = 'Commande recue';
+    text.textContent = 'Votre commande a ete envoyee au restaurant.';
+    setStageState('order-stage-received', 'active');
+    setStageState('order-stage-preparing', '');
+    setStageState('order-stage-ready', '');
+  } else if (status === 'accepted') {
+    title.textContent = 'Commande acceptee';
+    text.textContent = 'Le restaurant a confirme votre commande.';
+    setStageState('order-stage-received', 'done');
+    setStageState('order-stage-preparing', 'active');
+    setStageState('order-stage-ready', '');
+  } else if (status === 'preparing') {
+    title.textContent = 'Commande acceptee';
+    text.textContent = waitingMinutes
+      ? `Temps de preparation estime : ${waitingMinutes} minutes`
+      : 'Votre commande est en preparation.';
+    if (estimatedTime) {
+      meta.textContent = `Prevue vers ${estimatedTime}`;
+    }
+    setStageState('order-stage-received', 'done');
+    setStageState('order-stage-preparing', 'active');
+    setStageState('order-stage-ready', '');
+  } else if (status === 'ready') {
+    title.textContent = 'Commande prete';
+    text.textContent = 'Votre commande est prete.';
+    setStageState('order-stage-received', 'done');
+    setStageState('order-stage-preparing', 'done');
+    setStageState('order-stage-ready', 'active');
+  } else if (status === 'refused') {
+    title.textContent = 'Commande refusee';
+    text.textContent = 'Le restaurant ne peut pas traiter cette commande.';
+    setStageState('order-stage-received', 'done');
+    setStageState('order-stage-preparing', '');
+    setStageState('order-stage-ready', '');
+  } else {
+    title.textContent = 'Commande en cours';
+    text.textContent = 'Nous mettons a jour le statut de votre commande.';
+    setStageState('order-stage-received', 'active');
+    setStageState('order-stage-preparing', '');
+    setStageState('order-stage-ready', '');
+  }
+
+  card.classList.add('show');
+}
+
+function stopOrderStatusPolling() {
+  if (orderStatusPollTimer) {
+    clearTimeout(orderStatusPollTimer);
+    orderStatusPollTimer = null;
+  }
+}
+
+function pollOrderStatus() {
+  if (!currentOrderNumber) {
+    return;
+  }
+
+  fetch(`${BACKEND_URL}/order-status/${currentOrderNumber}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Status responded ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(order => {
+      renderOrderStatusCard(order);
+      stopOrderStatusPolling();
+      if (order.status !== 'refused' && order.status !== 'ready') {
+        orderStatusPollTimer = setTimeout(pollOrderStatus, 5000);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      stopOrderStatusPolling();
+      orderStatusPollTimer = setTimeout(pollOrderStatus, 8000);
+    });
+}
+
+function startOrderStatusPolling(orderNo) {
+  currentOrderNumber = Number(orderNo);
+  stopOrderStatusPolling();
+  renderOrderStatusCard({
+    order_no: currentOrderNumber,
+    status: 'received'
+  });
+  pollOrderStatus();
+}
+
+function cloneSupplements(supplements) {
+  return (supplements || []).map(supplement => ({
+    name: supplement.name,
+    price: Number(supplement.price)
+  }));
+}
+
+function getCartItemSupplementsKey(item) {
+  return cloneSupplements(item.supplements)
+    .sort((left, right) => left.name.localeCompare(right.name))
+    .map(supplement => `${supplement.name}:${Number(supplement.price).toFixed(2)}`)
+    .join('|');
+}
+
+function getCartItemKey(item) {
+  return [
+    item.name,
+    Number(item.price).toFixed(2),
+    (item.note || '').trim(),
+    item.flavor || '',
+    getCartItemSupplementsKey(item)
+  ].join('::');
+}
+
+function createCartItem(name, price, details = {}) {
+  return {
+    name: name,
+    price: Number(price),
+    qty: details.qty || 1,
+    note: (details.note || '').trim(),
+    supplements: cloneSupplements(details.supplements),
+    showSupplements: Boolean(details.showSupplements),
+    flavor: details.flavor || '',
+    showFlavors: Boolean(details.showFlavors)
+  };
+}
+
+function consolidateCartLines() {
+  const mergedCart = [];
+  for (let i = 0; i < cart.length; i++) {
+    const currentItem = cart[i];
+    const existingItem = mergedCart.find(item => getCartItemKey(item) === getCartItemKey(currentItem));
+    if (existingItem) {
+      existingItem.qty += currentItem.qty || 1;
+      existingItem.showSupplements = existingItem.showSupplements || currentItem.showSupplements;
+      existingItem.showFlavors = existingItem.showFlavors || currentItem.showFlavors;
+      continue;
+    }
+    mergedCart.push(createCartItem(currentItem.name, currentItem.price, currentItem));
+  }
+
+  cart.length = 0;
+  for (let i = 0; i < mergedCart.length; i++) {
+    cart.push(mergedCart[i]);
+  }
+}
+
+function addConfiguredItemToCart(item) {
+  const configuredItem = createCartItem(item.name, item.price, item);
+  const existingItem = cart.find(cartItem => getCartItemKey(cartItem) === getCartItemKey(configuredItem));
+  if (existingItem) {
+    existingItem.qty += configuredItem.qty || 1;
+  } else {
+    cart.push(configuredItem);
+  }
+  updateCartBadge();
+}
+
+function renderCustomizationSupplements() {
+  const supplementsBlock = document.getElementById('customize-supplements-block');
+  const supplementsContainer = document.getElementById('customize-supplements');
+  if (!pendingCustomizationItem || !supplementsBlock || !supplementsContainer) {
+    return;
+  }
+
+  if (!canHaveSupplements(pendingCustomizationItem.name)) {
+    supplementsBlock.style.display = 'none';
+    supplementsContainer.innerHTML = '';
+    return;
+  }
+
+  supplementsBlock.style.display = '';
+  supplementsContainer.innerHTML = SUPPLEMENTS.map((supplement, supplementIndex) => {
+    const isSelected = pendingCustomizationItem.supplements.some(selected => selected.name === supplement.name);
+    return `<button type="button" class="item-supplement-btn${isSelected ? ' selected' : ''}" onclick="togglePendingSupplement('${supplementIndex}')">${escapeHtml(supplement.name)} +${supplement.price}DT</button>`;
+  }).join('');
+}
+
+function startItemCustomization(name, price) {
+  pendingCustomizationItem = {
+    name: name,
+    price: Number(price),
+    supplements: []
+  };
+
+  document.getElementById('customize-item-name').textContent = name;
+  document.getElementById('customize-item-price').textContent = `${Number(price).toFixed(1)}DT`;
+  document.getElementById('customize-note').value = '';
+  renderCustomizationSupplements();
+  document.getElementById('customize-modal').style.display = 'flex';
+}
+
+function closeCustomizationModal() {
+  pendingCustomizationItem = null;
+  document.getElementById('customize-modal').style.display = 'none';
+}
+
+function togglePendingSupplement(supplementIndexValue) {
+  const supplementIndex = Number(supplementIndexValue);
+  if (!pendingCustomizationItem || !Number.isInteger(supplementIndex) || !SUPPLEMENTS[supplementIndex]) {
+    return;
+  }
+
+  const supplement = SUPPLEMENTS[supplementIndex];
+  const existingIndex = pendingCustomizationItem.supplements.findIndex(selected => selected.name === supplement.name);
+  if (existingIndex >= 0) {
+    pendingCustomizationItem.supplements.splice(existingIndex, 1);
+  } else {
+    pendingCustomizationItem.supplements.push({ name: supplement.name, price: supplement.price });
+  }
+  renderCustomizationSupplements();
+}
+
+function confirmCustomization() {
+  if (!pendingCustomizationItem) {
+    return;
+  }
+
+  const configuredItem = createCartItem(pendingCustomizationItem.name, pendingCustomizationItem.price, {
+    note: document.getElementById('customize-note').value,
+    supplements: pendingCustomizationItem.supplements
+  });
+
+  addConfiguredItemToCart(configuredItem);
+  closeCustomizationModal();
+  showToast(`${configuredItem.name} ajouté ✓`);
+}
+
+function addToCart(name, price) {
+  startItemCustomization(name, price);
+}
+
+function resetSendOrderButton() {
+  const sendButton = document.getElementById('send-order-btn');
+  if (!sendButton) {
+    return;
+  }
+  sendButton.disabled = false;
+  sendButton.textContent = 'Envoyer la commande';
+}
+
 function openCart() {
   const modal = document.getElementById('cart-modal');
   const body = document.getElementById('cart-body');
+  resetSendOrderButton();
   const keys = Object.keys(cart);
   if (keys.length === 0) {
     body.innerHTML = '<p style="text-align:center;color:#999">Votre panier est vide.</p>';
   } else {
     let total = 0;
-    body.innerHTML = keys.map(name => {
-      const item = cart[name];
+    const totalItems = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+    body.innerHTML = cart.map((item, index) => {
+      const itemQty = item.qty || 1;
       const numPrice = parseFloat(item.price);
-      const lineTotal = numPrice * item.qty;
+      const supplementsAllowed = canHaveSupplements(item.name);
+      const flavorChoices = FLAVOR_OPTIONS[item.name] || [];
+      const flavorAllowed = flavorChoices.length > 0;
+      const supplementTotal = supplementsAllowed
+        ? (item.supplements || []).reduce((sum, supplement) => sum + Number(supplement.price), 0)
+        : 0;
+      const lineTotal = (numPrice + supplementTotal) * itemQty;
       total += lineTotal;
-      const safeName = name.replace(/'/g, "\\'");
+      const safeIndex = String(index);
+      const safeName = safeIndex;
+      const displayName = flavorAllowed && item.flavor ? `${item.name} - ${item.flavor}` : item.name;
+      const safeLabel = escapeHtml(displayName);
+      const safeNote = escapeHtml(item.note || '');
+      const supplementCount = supplementsAllowed ? (item.supplements || []).length : 0;
+      const supplementButtons = SUPPLEMENTS.map((supplement, supplementIndex) => {
+        const isSelected = (item.supplements || []).some(selected => selected.name === supplement.name);
+        return `<button class="item-supplement-btn${isSelected ? ' selected' : ''}" onclick="toggleSupplement('${safeIndex}', '${supplementIndex}')">${escapeHtml(supplement.name)} +${supplement.price}DT</button>`;
+      }).join('');
+      const supplementMarkup = supplementsAllowed ? `
+          <div class="item-supplements${item.showSupplements ? '' : ' is-collapsed'}">
+            <button class="item-supplements-toggle" onclick="toggleSupplementPanel('${safeIndex}')">${supplementCount > 0 ? `${supplementCount} supplement(s)` : 'Ajouter supplements'}</button>
+            <div class="item-supplements-label">Supplements</div>
+            <div class="item-supplements-list">${supplementButtons}</div>
+          </div>` : '';
+      const flavorButtons = flavorChoices.map(flavor => {
+        const isSelected = item.flavor === flavor;
+        return `<button class="item-flavor-btn${isSelected ? ' selected' : ''}" onclick="setFlavor('${safeIndex}', '${escapeJsString(flavor)}')">${escapeHtml(flavor)}</button>`;
+      }).join('');
+      const flavorMarkup = flavorAllowed ? `
+          <div class="item-flavors${item.showFlavors ? '' : ' is-collapsed'}">
+            <button class="item-flavors-toggle" onclick="toggleFlavorPanel('${safeIndex}')">${item.flavor ? `Saveur: ${escapeHtml(item.flavor)}` : 'Choisir saveur'}</button>
+            <div class="item-flavors-label">Saveur</div>
+            <div class="item-flavors-list">${flavorButtons}</div>
+          </div>` : '';
+      const noteMarkup = `<textarea class="item-note" placeholder="Note optionnelle pour cet article" oninput="saveItemNote('${safeName}', this.value)">${safeNote}</textarea>`;
       return `
         <div class="cart-row">
-          <span class="cart-name">${name}</span>
+          <div class="cart-row-top">
+            <span class="cart-name">${safeLabel}</span>
           <div class="cart-qty-ctrl">
             <button onclick="changeQty('${safeName}', -1)">−</button>
-            <span>${item.qty}</span>
-            <button onclick="changeQty('${safeName}', 1)">+</button>
+            <span class="cart-qty-value">${itemQty}</span>
+            <button onclick="changeQty('${safeIndex}', 1)">+</button>
           </div>
-          <span class="cart-price">${lineTotal.toFixed(1)}DT</span>
+            <span class="cart-price">${lineTotal.toFixed(1)}DT</span>
+          </div>
+          ${flavorMarkup}
+          ${supplementMarkup}
+          ${noteMarkup}
         </div>`;
-    }).join('') + `<div class="cart-total">Total : <strong>${total.toFixed(1)}DT</strong></div>`;
+    }).join('') + `<div class="cart-total">${cart.length} ${cart.length > 1 ? 'articles' : 'article'} • Total : <strong>${total.toFixed(1)}DT</strong></div>`;
+    body.querySelector('.cart-total').innerHTML = `${totalItems} ${totalItems > 1 ? 'articles' : 'article'} • Total : <strong>${total.toFixed(1)}DT</strong>`;
   }
   modal.style.display = 'flex';
 }
 
+function saveItemNote(name, value) {
+  const index = Number(name);
+  if (!Number.isInteger(index) || !cart[index]) {
+    return;
+  }
+  cart[index].note = value;
+  consolidateCartLines();
+}
+
+function toggleFlavorPanel(itemIndexValue) {
+  const itemIndex = Number(itemIndexValue);
+  if (!Number.isInteger(itemIndex) || !cart[itemIndex] || !canChooseFlavor(cart[itemIndex].name)) {
+    return;
+  }
+
+  cart[itemIndex].showFlavors = !cart[itemIndex].showFlavors;
+  openCart();
+}
+
+function setFlavor(itemIndexValue, flavorValue) {
+  const itemIndex = Number(itemIndexValue);
+  if (!Number.isInteger(itemIndex) || !cart[itemIndex] || !canChooseFlavor(cart[itemIndex].name)) {
+    return;
+  }
+
+  cart[itemIndex].flavor = flavorValue;
+  cart[itemIndex].showFlavors = false;
+  consolidateCartLines();
+  openCart();
+}
+
+function toggleSupplementPanel(itemIndexValue) {
+  const itemIndex = Number(itemIndexValue);
+  if (!Number.isInteger(itemIndex) || !cart[itemIndex] || !canHaveSupplements(cart[itemIndex].name)) {
+    return;
+  }
+
+  cart[itemIndex].showSupplements = !cart[itemIndex].showSupplements;
+  openCart();
+}
+
+function toggleSupplement(itemIndexValue, supplementIndexValue) {
+  const itemIndex = Number(itemIndexValue);
+  const supplementIndex = Number(supplementIndexValue);
+  if (!Number.isInteger(itemIndex) || !cart[itemIndex] || !canHaveSupplements(cart[itemIndex].name) || !Number.isInteger(supplementIndex) || !SUPPLEMENTS[supplementIndex]) {
+    return;
+  }
+
+  const supplement = SUPPLEMENTS[supplementIndex];
+  const selectedSupplements = cart[itemIndex].supplements || [];
+  const existingIndex = selectedSupplements.findIndex(selected => selected.name === supplement.name);
+
+  if (existingIndex >= 0) {
+    selectedSupplements.splice(existingIndex, 1);
+  } else {
+    selectedSupplements.push({ name: supplement.name, price: supplement.price });
+  }
+
+  cart[itemIndex].supplements = selectedSupplements;
+  cart[itemIndex].showSupplements = true;
+  consolidateCartLines();
+  openCart();
+}
+
 function changeQty(name, delta) {
-  cart[name].qty += delta;
-  if (cart[name].qty <= 0) delete cart[name];
+  const index = Number(name);
+  if (!Number.isInteger(index) || !cart[index]) {
+    return;
+  }
+
+  cart[index].qty = (cart[index].qty || 1) + delta;
+  if (cart[index].qty <= 0) {
+    cart.splice(index, 1);
+  }
   updateCartBadge();
   openCart(); // re-render
 }
@@ -1214,21 +2422,38 @@ function closeCart() {
 }
 
 function sendOrder() {
-  const keys = Object.keys(cart);
-  if (keys.length === 0) {
-    alert("Panier vide !");
+  if (cart.length === 0) {
+    showNotice("Panier vide !", 'error');
     return;
   }
 
-  let total = 0;
-  const items = keys.map(name => {
-    const item = cart[name];
-    const numPrice = parseFloat(item.price);
-    total += numPrice * item.qty;
-    return { name: name, qty: item.qty, price: numPrice };
-  });
+  const sendButton = document.getElementById('send-order-btn');
+  if (sendButton.disabled) {
+    return;
+  }
+  sendButton.disabled = true;
+  sendButton.textContent = 'Envoi...';
 
-  const notes = document.getElementById('order-notes').value || '';
+  const items = cart.map(item => {
+    const itemQty = item.qty || 1;
+    const numPrice = parseFloat(item.price);
+    const supplements = (item.supplements || []).map(supplement => ({
+      name: supplement.name,
+      price: parseFloat(supplement.price)
+      }));
+    const supplementTotal = supplements.reduce((sum, supplement) => sum + supplement.price, 0);
+    const lineTotal = (numPrice + supplementTotal) * itemQty;
+    const itemName = canChooseFlavor(item.name) && item.flavor ? `${item.name} - ${item.flavor}` : item.name;
+    return {
+      name: itemName,
+      qty: itemQty,
+      price: numPrice,
+      note: (item.note || '').trim(),
+      supplements: supplements,
+      line_total: lineTotal
+    };
+  });
+  const total = items.reduce((sum, item) => sum + item.line_total, 0);
 
   fetch(`${BACKEND_URL}/send-order`, {
     method: "POST",
@@ -1236,8 +2461,7 @@ function sendOrder() {
     body: JSON.stringify({
       table: TABLE_NUMBER,
       items: items,
-      total: total,
-      notes: notes          // ← send notes
+      total: total
     })
   })
   .then(r => {
@@ -1245,20 +2469,19 @@ function sendOrder() {
     return r.json();
   })
   .then(data => {
-    alert("✅ Commande #" + data.order_no + " envoyée au serveur pour validation !");
-    Object.keys(cart).forEach(k => delete cart[k]);
+    showNotice("Commande #" + data.order_no + " envoyÃ©e au serveur pour validation.");
+    startOrderStatusPolling(data.order_no);
+    cart.length = 0;
     updateCartBadge();
-    document.getElementById('order-notes').value = '';   // clear notes
+    resetSendOrderButton();
     closeCart();
   })
   .catch(err => {
     console.error(err);
-    alert("Erreur d'envoi. Vérifiez votre connexion ou contactez le gérant.");
+    resetSendOrderButton();
+    showNotice("Erreur d'envoi. VÃ©rifiez votre connexion ou contactez le gÃ©rant.", 'error');
   });
 }
-
-
-
 </script>
 </body>
 </html> 
